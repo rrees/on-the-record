@@ -5,7 +5,7 @@ import os
 
 gdb = neo4j.GraphDatabaseService('http://localhost:7474/db/data/')
 
-if os.environ.get('NEO4J_REST_URL'):
+if 'NEO4J_REST_URL' in os.environ:
 	graph_db_url = urlparse(os.environ.get('NEO4J_REST_URL'))
 	gdb = neo4j.GraphDatabaseService('http://{host}:{port}{path}'.format(host=graph_db_url.hostname, port=graph_db_url.port, path=graph_db_url.path), user_name=graph_db_url.username, password=graph_db_url.password)
 
