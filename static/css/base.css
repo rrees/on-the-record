@@ -1,12 +1,13 @@
 body {
   margin: 3em;
-  width: 60em;
+  width: 40em;
   margin-left: auto;
   margin-right: auto;
   min-height: 30em;
+  font-size: 16px;
 }
 blockquote {
-  font-size: 1.8em;
+  font-size: 1.6em;
   font-style: italic;
 }
 section {
@@ -35,4 +36,10 @@ h3 {
 }
 .person {
   margin: 1em;
+}
+.quote {
+  padding-bottom: 0 0 1em 0;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 3em;
 }

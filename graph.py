@@ -4,6 +4,11 @@ from py2neo import cypher
 from urlparse import urlparse
 import os
 
+def first(list):
+	if list:
+		return list[0]
+	return None
+
 def setup_db():
 	if os.environ.get('NEO4J_REST_URL'):
 		#return neo4j.GraphDatabaseService(os.environ.get('NEO4J_REST_URL'))
@@ -23,11 +28,16 @@ def all_nodes():
 	return [node.pop().get_properties() for node in nodes]
 
 def people():
-	return [node for node in all_nodes() if 'name' in node]
+	nodes, metadata = cypher.execute(gdb, "START z=node(*) MATCH z-[:person]->p RETURN p")
+	return [node.pop().get_properties() for node in nodes]
 
 def person(person_id):
-	person_node = people_index.get("id", person_id).pop()
-	print person_node
+	person_node = people_index.get("id", person_id)
+
+	if not person_node: return None
+
+	person_node = first(person_node)
+
 	person_data = person_node.get_properties()
 
 	person_data['quotes'] = [q_node.get_properties() for q_node in person_node.get_related_nodes(neo4j.Direction.OUTGOING, "quote")]
