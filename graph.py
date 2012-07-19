@@ -1,6 +1,7 @@
 from py2neo import neo4j
 from py2neo import cypher
 
+from urlparse import urlparse
 import os
 
 def setup_db():
