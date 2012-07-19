@@ -13,6 +13,9 @@
 		{% for quote in person.quotes %}
 		<article class="quote">
 			<blockquote>{{quote.quote}}</blockquote>
+			{% if quote.context %}
+			<p class="detail">{{quote.context.name}}</p>
+			{% endif %}
 		</article>
 		{% endfor %}
 	</heading>

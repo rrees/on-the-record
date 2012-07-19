@@ -43,3 +43,6 @@ h3 {
   margin-right: 1em;
   margin-bottom: 3em;
 }
+.quote .detail {
+  text-align: right;
+}

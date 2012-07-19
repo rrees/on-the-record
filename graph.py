@@ -31,6 +31,20 @@ def people():
 	nodes, metadata = cypher.execute(gdb, "START z=node(*) MATCH z-[:person]->p RETURN p")
 	return [node.pop().get_properties() for node in nodes]
 
+def resolve_quotes(person_node):
+	quotes = person_node.get_related_nodes(neo4j.Direction.OUTGOING, "quote")
+
+	def generate_quote(quote_node):
+		data = quote_node.get_properties()
+		
+		if quote_node.has_relationship(neo4j.Direction.OUTGOING, "context"):
+			context = quote_node.get_related_nodes(neo4j.Direction.OUTGOING, "context").pop()
+			data['context'] = context.get_properties()
+
+		return data
+
+	return [generate_quote(q_node) for q_node in quotes]
+
 def person(person_id):
 	person_node = people_index.get("id", person_id)
 
@@ -40,6 +54,6 @@ def person(person_id):
 
 	person_data = person_node.get_properties()
 
-	person_data['quotes'] = [q_node.get_properties() for q_node in person_node.get_related_nodes(neo4j.Direction.OUTGOING, "quote")]
+	person_data['quotes'] = resolve_quotes(person_node)
 
 	return person_data
