@@ -13,3 +13,12 @@ def all_nodes():
 
 def people():
 	return [node for node in all_nodes() if 'name' in node]
+
+def person(person_id):
+	person_node = people_index.get("id", person_id).pop()
+	print person_node
+	person_data = person_node.get_properties()
+
+	person_data['quotes'] = [q_node.get_properties() for q_node in person_node.get_related_nodes(neo4j.Direction.OUTGOING, "quote")]
+
+	return person_data

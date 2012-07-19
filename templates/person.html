@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}{{person.name}}{% endblock %}
+
+{% block content %}
+<heading>
+	<h1>{{person.name}}</h1>
+</heading>
+
+{% if person.quotes %}
+<section>
+	<heading>
+		<h1>Quotes</h1>
+		{% for quote in person.quotes %}
+		<article>
+			<blockquote>{{quote.quote}}</blockquote>
+		</article>
+		{% endfor %}
+	</heading>
+</section>
+{% endif %}
+
+{% endblock %}
