@@ -3,9 +3,11 @@ from py2neo import cypher
 
 import os
 
-db_uri = os.environ.get('NEO4J_REST_URL', "http://localhost:7474/db/data/")
+gdb = neo4j.GraphDatabaseService('http://localhost:7474/db/data/')
 
-gdb = neo4j.GraphDatabaseService(db_uri)
+if os.environ.get('NEO4J_REST_URL'):
+	graph_db_url = urlparse(os.environ.get('NEO4J_REST_URL'))
+	gdb = neo4j.GraphDatabaseService('http://{host}:{port}{path}'.format(host=graph_db_url.hostname, port=graph_db_url.port, path=graph_db_url.path), user_name=graph_db_url.username, password=graph_db_url.password)
 
 people_index = gdb.get_or_create_index(neo4j.Node, "people")
 
