@@ -6,9 +6,9 @@ gdb = neo4j.GraphDatabaseService(db_uri)
 
 base_node = gdb.get_reference_node()
 
-def relate(a, b, rtype):
+def relate(a, b, rtype, properties = None):
 	if not a.has_relationship_with(b, neo4j.Direction.OUTGOING, rtype):
-		a.create_relationship_to(b, rtype)
+		a.create_relationship_to(b, rtype, properties)
 	return (a, b)
 
 people_index = gdb.get_or_create_index(neo4j.Node, "people")
@@ -16,7 +16,8 @@ people_index = gdb.get_or_create_index(neo4j.Node, "people")
 people = [
 	{"name" : "Jeremy Paxman" , "id" : "798f1780-d187-11e1-acb4-2c4138a8ba9b"},
 	{"name" : "Chloe Smith", "id" : "97a1251a-d187-11e1-acb4-2c4138a8ba9b"},
-	{"name" : "Michael Howard", "id" : '724b7080-d1ba-11e1-acb4-2c4138a8ba9b'},]
+	{"name" : "Michael Howard", "id" : '724b7080-d1ba-11e1-acb4-2c4138a8ba9b'},
+	{"name" : "Derek Lewis", "id" : 'c0e61728-d1c8-11e1-acb4-2c4138a8ba9b'},]
 
 for person in people:
 	p_node = people_index.get_or_create("id", person['id'], person)
@@ -61,3 +62,20 @@ for context, relevant_quotes in contexts:
 	relate(base_node, context_node, "quote_context")
 
 	print "Created {context}".format(context = context)
+
+interactions = [
+	{"quote_id" : '17643a0c-d189-11e1-acb4-2c4138a8ba9b',
+		'target_person' : "97a1251a-d187-11e1-acb4-2c4138a8ba9b",
+		"label" : "interview with"},
+	{"quote_id" : '4ddbbf48-d1ba-11e1-acb4-2c4138a8ba9b',
+		'target_person' : '724b7080-d1ba-11e1-acb4-2c4138a8ba9b',
+		"label" : "interview with"},
+	{"quote_id" : '4ddbbf48-d1ba-11e1-acb4-2c4138a8ba9b',
+		'target_person' : 'c0e61728-d1c8-11e1-acb4-2c4138a8ba9b',
+		"label" : "refers to"},
+]
+
+for interaction in interactions:
+	quote_node = quote_index.get("id", interaction['quote_id']).pop()
+	person_node = people_index.get("id", interaction['target_person']).pop()
+	relate(quote_node, person_node, "interaction", {"label" : interaction['label']})

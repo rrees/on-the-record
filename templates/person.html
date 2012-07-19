@@ -3,18 +3,22 @@
 {% block title %}{{person.name}}{% endblock %}
 
 {% block content %}
-<heading>
-	<h1>{{person.name}}</h1>
-</heading>
+
+<h2>{{person.name}}</h2>
 
 {% if person.quotes %}
 <section>
-		<h2>Quotes</h2>
+		<h3>Quotes</h3>
 		{% for quote in person.quotes %}
 		<article class="quote">
 			<blockquote>{{quote.quote}}</blockquote>
+			{% if quote.interactions %}
+			{% for interaction in quote.interactions %}
+			<p class="interaction">{{interaction.label}} <a href="/person/{{interaction.person.id}}">{{interaction.person.name}}</a></p>
+			{% endfor %}
+			{% endif %}
 			{% if quote.context %}
-			<p class="detail">{{quote.context.name}}</p>
+			<p class="context">{{quote.context.name}}</p>
 			{% endif %}
 		</article>
 		{% endfor %}

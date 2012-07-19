@@ -41,6 +41,16 @@ def resolve_quotes(person_node):
 			context = quote_node.get_related_nodes(neo4j.Direction.OUTGOING, "context").pop()
 			data['context'] = context.get_properties()
 
+		if quote_node.has_relationship(neo4j.Direction.OUTGOING, "interaction"):
+			interactions = quote_node.get_relationships(neo4j.Direction.OUTGOING, "interaction")
+
+			data['interactions'] = []
+			for interaction in interactions:
+				data['interactions'].append({
+					"person" : interaction.end_node.get_properties(),
+					"label" : interaction['label']
+					})
+
 		return data
 
 	return [generate_quote(q_node) for q_node in quotes]

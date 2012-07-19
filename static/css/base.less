@@ -18,11 +18,6 @@ section {
 	margin-bottom: 1em;
 }
 
-heading {
-	margin-bottom: 1em;
-	display: block;
-}
-
 footer {
 	margin-top: 3em;
 	padding-top: 1em;
@@ -32,15 +27,19 @@ footer {
 
 h1 {
 	font-size: 300%;
+	margin-bottom: 1em;
 }
 
 h2 {
-	margin-top: 1em;
+	margin-bottom: 1em;
 	font-size: 200%;
 }
 
 h3 {
 	font-size: 150%;
+	margin-bottom: 1em;
+	font-weight: normal;
+	padding-left: 0.5em;
 }
 
 
@@ -49,12 +48,25 @@ h3 {
 
 }
 
+.right {
+	text-align: right;
+}
+
 .quote {
 	padding-bottom: 0 0 1em 0;
 	margin-left: 1em;
 	margin-right: 1em;
 	margin-bottom: 3em;
-	.context {
-		text-align: right;
+	.context, .interaction {
+		.right;
+	}
+}
+
+.page-title {
+	padding-bottom: 1em;
+	border-bottom: 1px black solid;
+	margin-bottom: 2em;
+	h1 {
+		margin: 0;
 	}
 }
