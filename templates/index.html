@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Front{% endblock %}
+
+{% block content %}
+<heading>
+	<h1>On the record</h1>
+</heading>
+
+{% if people %}
+<section>
+	<heading><h1>People on the record</h1></heading>
+	<ul>
+	{% for person in people %}
+		<li><a href="/person/{{person.id}}">{{person.name}}</a></li>
+	{% endfor %}
+	</ul>
+</section>
+{% endif %}
+{% endblock %}
