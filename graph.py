@@ -3,7 +3,7 @@ from py2neo import cypher
 
 import os
 
-db_uri = os.environ.get('NEO4J_URL', "http://localhost:7474/db/data/")
+db_uri = os.environ.get('NEO4J_REST_URL', "http://localhost:7474/db/data/")
 
 gdb = neo4j.GraphDatabaseService(db_uri)
 
