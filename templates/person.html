@@ -9,8 +9,7 @@
 
 {% if person.quotes %}
 <section>
-	<heading>
-		<h1>Quotes</h1>
+		<h2>Quotes</h2>
 		{% for quote in person.quotes %}
 		<article>
 			<blockquote>{{quote.quote}}</blockquote>
@@ -18,6 +17,9 @@
 		{% endfor %}
 	</heading>
 </section>
+
+{% else %}
+<p>No quotes recorded.</p>
 {% endif %}
 
 {% endblock %}

@@ -9,10 +9,11 @@
 
 {% if people %}
 <section>
-	<heading><h1>People on the record</h1></heading>
-	<ul>
+	<h2>People on the record</h2>
 	{% for person in people %}
-		<li><a href="/person/{{person.id}}">{{person.name}}</a></li>
+		<article class="person">
+		<p><a href="/person/{{person.id}}">{{person.name}}</a></p>
+		</article>
 	{% endfor %}
 	</ul>
 </section>
