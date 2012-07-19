@@ -1,7 +1,9 @@
 from py2neo import neo4j
 from py2neo import cypher
 
-db_uri = "http://localhost:7474/db/data/"
+import os
+
+db_uri = os.environ.get('NEO4J_URL', "http://localhost:7474/db/data/")
 
 gdb = neo4j.GraphDatabaseService(db_uri)
 
