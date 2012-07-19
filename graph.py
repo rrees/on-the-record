@@ -3,11 +3,14 @@ from py2neo import cypher
 
 import os
 
-gdb = neo4j.GraphDatabaseService('http://localhost:7474/db/data/')
+def setup_db():
+	if os.environ.get('NEO4J_REST_URL'):
+		db_uri = "{host}:{port}/db/data/".format(host = os.environ['NEO4J_HOST'], port=os.environ['NEO4J_PORT'])
+		return neo4j.GraphDatabaseService(db_uri, user_name = os.envion['NEO4J_LOGIN'], password = os.environ['NEO4J_PASSWORD'])
 
-if 'NEO4J_REST_URL' in os.environ:
-	graph_db_url = urlparse(os.environ.get('NEO4J_REST_URL'))
-	gdb = neo4j.GraphDatabaseService('http://{host}:{port}{path}'.format(host=graph_db_url.hostname, port=graph_db_url.port, path=graph_db_url.path), user_name=graph_db_url.username, password=graph_db_url.password)
+	return neo4j.GraphDatabaseService("http://localhost:7474/db/data/")
+
+gdb = setup_db()
 
 people_index = gdb.get_or_create_index(neo4j.Node, "people")
 
